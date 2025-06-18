@@ -59,8 +59,10 @@
       <div class="section" id="section-4">
         <div class="section-number" id="number-4">4</div>
         <div class="section-content">
-          <div class="section-title">Ca làm việc</div>
-          <div class="section-desc">Mô tả ...</div>
+          <div class="section-title">Bảng chấm công theo kỳ</div>
+          <div class="section-desc">
+            Tổng hợp dữ liệu chấm công hàng ngày để xác định tổng công, số ngày nghỉ, số ca làm việc trong kỳ.
+          </div>
           <div class="section-actions">
             <button class="btn confirm" onclick="confirmStep(4, this)">Xác nhận</button>
             <button class="btn detail">Xem chi tiết</button>
@@ -74,23 +76,6 @@
       <div class="section" id="section-5">
         <div class="section-number" id="number-5">5</div>
         <div class="section-content">
-          <div class="section-title">Bảng chấm công theo kỳ</div>
-          <div class="section-desc">
-            Tổng hợp dữ liệu chấm công hàng ngày để xác định tổng công, số ngày nghỉ, số ca làm việc trong kỳ.
-          </div>
-          <div class="section-actions">
-            <button class="btn confirm" onclick="confirmStep(5, this)">Xác nhận</button>
-            <button class="btn detail">Xem chi tiết</button>
-          </div>
-          <div class="confirm-message" id="confirm-message-5" style="display:none;">
-            <span class="checkmark">✔</span> Đã hoàn thành bước này
-          </div>
-        </div>
-      </div>
-
-      <div class="section" id="section-6">
-        <div class="section-number" id="number-6">6</div>
-        <div class="section-content">
           <div class="section-title">Bảng lương & thanh toán</div>
           <div class="section-desc">
             <ul>
@@ -100,10 +85,10 @@
           </div>
           <div class="section-actions">
             <button class="btn excel special" id="btn-salary-lock">Tiền lương & xác vào bảng chấm công</button>
-            <button class="btn confirm" onclick="confirmStep(6, this)">Xác nhận</button>
+            <button class="btn confirm" onclick="confirmStep(5, this)">Xác nhận</button>
             <button class="btn detail">Xem bảng lương</button>
           </div>
-          <div class="confirm-message" id="confirm-message-6" style="display:none;">
+          <div class="confirm-message" id="confirm-message-5" style="display:none;">
             <span class="checkmark">✔</span> Đã hoàn thành bước này
           </div>
         </div>
@@ -129,9 +114,9 @@
       document.getElementById('confirm-message-' + step).style.display = 'flex';
       btn.classList.add('confirmed');
       btn.innerText = 'Đã xác nhận';
-      // Đặc biệt cho bước 5: sau khi xác nhận thì enable nút Tiền lương & xác vào bảng chấm công ở bước 6
-      if (step === 5) {
-        document.getElementById('section-6').classList.add('salary-step-ready');
+      // Đặc biệt cho bước 4: sau khi xác nhận thì enable nút Tiền lương & xác vào bảng chấm công ở bước 5
+      if (step === 4) {
+        document.getElementById('section-5').classList.add('salary-step-ready');
       }
     }
     function showStepError() {
