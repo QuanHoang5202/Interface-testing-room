@@ -1,0 +1,284 @@
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background: #F6F9FB;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 720px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 24px 0 rgba(0, 117, 255, 0.10);
+  padding: 32px 30px 40px 30px;
+}
+
+.header {
+  text-align: center;
+  color: #0593FF;
+  font-weight: 700;
+  font-size: 26px;
+  margin-bottom: 36px;
+  letter-spacing: 1px;
+}
+
+.section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.section {
+  display: flex;
+  align-items: flex-start;
+  background: #f1f7fe;
+  border-radius: 12px;
+  padding: 18px 18px 18px 0;
+  box-shadow: 0 2px 8px 0 rgba(0, 117, 255, 0.06);
+  border: 1px solid transparent;
+  transition: background 0.3s, border 0.3s;
+}
+
+.section-number {
+  min-width: 44px;
+  height: 44px;
+  background: #0593FF;
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18px;
+  margin-top: 2px;
+  margin-left: 5px;
+
+  box-shadow: 0 2px 6px 0 rgba(0, 117, 255, 0.12);
+  transition: background 0.3s;
+}
+
+.section-content {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 3px;
+}
+
+.section-desc {
+  font-size: 15px;
+  color: #4A4A4A;
+  margin-bottom: 12px;
+}
+
+.section-desc ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.section-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.btn.excel {
+  background: #0593FF;
+  color: #fff;
+  border: 1px solid #0593FF;
+}
+
+.btn.excel:hover {
+  background: #0070c9;
+  border-color: #0070c9;
+}
+
+.btn.detail {
+  background: #fff;
+  color: #0593FF;
+  border: 1px solid #0593FF;
+}
+
+.btn.detail:hover {
+  background: #eaf6ff;
+}
+
+.btn.special {
+  background: #27D5A2;
+  color: #fff;
+  border: 1px solid #27D5A2;
+}
+
+.btn.special:hover {
+  background: #1bb07d;
+  border-color: #1bb07d;
+}
+
+.btn.confirm {
+  background: #fff;
+  color: #27D5A2;
+  border: 1.5px solid #27D5A2;
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.btn.confirm:hover {
+  background: #e6fff2;
+}
+
+/* Hieu ung xac nhan */
+
+.section.confirmed {
+  background: #e6fff2;
+  border: 1px solid #27d5a2;
+  transition: background 0.3s, border 0.3s;
+}
+
+.section-number.confirmed {
+  background: #27d5a2;
+}
+
+.confirm-message {
+  color: #27d5a2;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: fadeIn 0.4s;
+}
+
+.confirm-message .checkmark {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn.confirmed {
+  background: #27d5a2 !important;
+  color: #fff !important;
+  border-color: #27d5a2 !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+
+.section.confirmed {
+  background: #e6fff2;
+  border: 1px solid #27d5a2;
+  transition: background 0.3s, border 0.3s;
+}
+
+.section-number.confirmed {
+  background: #27d5a2;
+}
+
+.confirm-message {
+  color: #27d5a2;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: fadeIn 0.4s;
+}
+
+.confirm-message .checkmark {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn.confirmed {
+  background: #27d5a2 !important;
+  color: #fff !important;
+  border-color: #27d5a2 !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Ẩn nút xem chi tiết khi chưa xác nhận */
+.btn.detail {
+  display: none;
+}
+
+.section.confirmed .btn.detail {
+  display: inline-block;
+}
+
+/* Ẩn nút Tiền lương & xác vào bảng chấm công của bước 6 mặc định */
+#btn-salary-lock {
+  display: none;
+}
+
+.salary-step-ready #btn-salary-lock {
+  display: inline-block;
+}
+
+/* Thông báo lỗi */
+#step-error {
+  display: none;
+  position: fixed;
+  top: 8%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff8ec;
+  color: #e67e22;
+  border: 1.5px solid #f6c47b;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(230, 126, 34, 0.08);
+  padding: 16px 40px;
+  font-size: 18px;
+  z-index: 9999;
+  animation: fadeIn 0.25s;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

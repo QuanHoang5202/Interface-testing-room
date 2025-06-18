@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bảng tổng hợp tính lương nhân viên tháng 6</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="salary-summary.css">
+</head>
+<body>
+  <div class="container">
+    <h2 class="header">Bảng tổng hợp tính lương nhân viên tháng 6</h2>
+    <div class="section-list">
+
+      <div class="section" id="section-1">
+        <div class="section-number" id="number-1">1</div>
+        <div class="section-content">
+          <div class="section-title">Các khoản phải phụ cấp theo kỳ</div>
+          <div class="section-desc">Mô tả ...</div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(1, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-1" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-2">
+        <div class="section-number" id="number-2">2</div>
+        <div class="section-content">
+          <div class="section-title">Các khoản phải nộp theo kỳ</div>
+          <div class="section-desc">Mô tả ...</div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(2, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-2" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-3">
+        <div class="section-number" id="number-3">3</div>
+        <div class="section-content">
+          <div class="section-title">Các khoản giảm trừ theo kỳ</div>
+          <div class="section-desc">Mô tả ...</div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(3, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-3" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-4">
+        <div class="section-number" id="number-4">4</div>
+        <div class="section-content">
+          <div class="section-title">Ca làm việc</div>
+          <div class="section-desc">Mô tả ...</div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(4, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-4" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-5">
+        <div class="section-number" id="number-5">5</div>
+        <div class="section-content">
+          <div class="section-title">Bảng chấm công theo kỳ</div>
+          <div class="section-desc">
+            Tổng hợp dữ liệu chấm công hàng ngày để xác định tổng công, số ngày nghỉ, số ca làm việc trong kỳ.
+          </div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(5, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-5" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-6">
+        <div class="section-number" id="number-6">6</div>
+        <div class="section-content">
+          <div class="section-title">Bảng lương & thanh toán</div>
+          <div class="section-desc">
+            <ul>
+              <li>Lập bảng lương chi tiết từng nhân viên.</li>
+              <li>Chuyển lương vào tài khoản ngân hàng hoặc thanh toán theo hình thức đã đăng ký.</li>
+            </ul>
+          </div>
+          <div class="section-actions">
+            <button class="btn excel special" id="btn-salary-lock">Tiền lương & xác vào bảng chấm công</button>
+            <button class="btn confirm" onclick="confirmStep(6, this)">Xác nhận</button>
+            <button class="btn detail">Xem bảng lương</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-6" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Thông báo lỗi -->
+  <div id="step-error">Vui lòng hoàn thành bước trước đó trước khi xác nhận bước này!</div>
+  <script>
+    function confirmStep(step, btn) {
+      // Nếu không phải bước đầu, kiểm tra bước trước đã hoàn thành chưa
+      if (step > 1) {
+        var prevSection = document.getElementById('section-' + (step - 1));
+        if (!prevSection.classList.contains('confirmed')) {
+          showStepError();
+          return;
+        }
+      }
+      // Đánh dấu hoàn thành
+      document.getElementById('section-' + step).classList.add('confirmed');
+      document.getElementById('number-' + step).classList.add('confirmed');
+      document.getElementById('confirm-message-' + step).style.display = 'flex';
+      btn.classList.add('confirmed');
+      btn.innerText = 'Đã xác nhận';
+      // Đặc biệt cho bước 5: sau khi xác nhận thì enable nút Tiền lương & xác vào bảng chấm công ở bước 6
+      if (step === 5) {
+        document.getElementById('section-6').classList.add('salary-step-ready');
+      }
+    }
+    function showStepError() {
+      var errorDiv = document.getElementById('step-error');
+      errorDiv.style.display = 'block';
+      clearTimeout(window.__stepErrorTimeout);
+      window.__stepErrorTimeout = setTimeout(function(){
+        errorDiv.style.display = 'none';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
