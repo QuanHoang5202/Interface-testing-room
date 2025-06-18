@@ -23,6 +23,8 @@ body {
   letter-spacing: 1px;
 }
 
+
+
 .section-list {
   display: flex;
   flex-direction: column;
@@ -190,42 +192,9 @@ body {
 }
 
 
-.section.confirmed {
-  background: #e6fff2;
-  border: 1px solid #27d5a2;
-  transition: background 0.3s, border 0.3s;
-}
-
-.section-number.confirmed {
-  background: #27d5a2;
-}
-
-.confirm-message {
-  color: #27d5a2;
-  font-size: 15px;
-  font-weight: 500;
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  animation: fadeIn 0.4s;
-}
-
 .confirm-message .checkmark {
   font-size: 18px;
   font-weight: bold;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .btn.confirmed {
@@ -273,12 +242,111 @@ body {
   text-align: center;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+/* Thêm wrapper mới cho form và progress */
+.form-block {
+  width: 100%;
+  max-width: 750px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
 
-  to {
-    opacity: 1;
-  }
+.form-row {
+  width: 100%;
+  display: flex;
+  gap: 18px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+  flex: 1 1 200px;
+  max-width: 260px;
+}
+
+.form-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0593FF;
+  margin-bottom: 2px;
+  letter-spacing: 0.2px;
+}
+
+.form-select {
+  padding: 8px 12px;
+  border: 1.5px solid #E3EAF5;
+  border-radius: 7px;
+  font-size: 15px;
+  background: #f8fbff;
+  color: #222;
+  outline: none;
+  transition: border .18s;
+}
+
+.form-select:focus {
+  border-color: #0593FF;
+  background: #fff;
+}
+
+/* Progress bar styles */
+.progress-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0593FF;
+  margin-bottom: 10px;
+  letter-spacing: 0.2px;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 18px;
+  background: #e3eaf5;
+  border-radius: 9px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #27D5A2 0%, #0593FF 100%);
+  width: 0%;
+  border-radius: 9px;
+  transition: width 0.5s cubic-bezier(.5, 1.7, .3, .8);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 13px;
+  color: #fff;
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.progress-percent-text {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 15px;
+  color: #0593FF;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Progress bar styles */
+.progress-container {
+  background: #f1f7fe;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px 0 rgba(0, 117, 255, 0.06);
+  padding: 18px 20px 14px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
 }

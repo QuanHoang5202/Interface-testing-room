@@ -1,261 +1,189 @@
-  <!DOCTYPE html>
-  <html lang="vi">
-  <head>
-    <meta charset="UTF-8">
-    <title>Bảng tổng hợp tính lương nhân viên tháng 6</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="salary-summary.css">
-    <style>
-      .form-row {
-        display: flex;
-        gap: 18px;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: flex-start;
-      }
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        min-width: 180px;
-        flex: 1 1 200px;
-        max-width: 260px;
-      }
-      .form-label {
-        font-size: 15px;
-        font-weight: 500;
-        color: #0593FF;
-        margin-bottom: 2px;
-        letter-spacing: 0.2px;
-      }
-      .form-select {
-        padding: 8px 12px;
-        border: 1.5px solid #E3EAF5;
-        border-radius: 7px;
-        font-size: 15px;
-        background: #f8fbff;
-        color: #222;
-        outline: none;
-        transition: border .18s;
-      }
-      .form-select:focus {
-        border-color: #0593FF;
-        background: #fff;
-      }
-      /* Các style cho phần còn lại giữ nguyên như cũ... */
-      .section.confirmed {
-        background: #e6fff2;
-        border: 1px solid #27d5a2;
-        transition: background 0.3s, border 0.3s;
-      }
-      .section-number.confirmed {
-        background: #27d5a2;
-      }
-      .confirm-message {
-        color: #27d5a2;
-        font-size: 15px;
-        font-weight: 500;
-        margin-top: 8px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        animation: fadeIn 0.4s;
-      }
-      .confirm-message .checkmark {
-        font-size: 18px;
-        font-weight: bold;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to   { opacity: 1; }
-      }
-      .btn.confirmed {
-        background: #27d5a2 !important;
-        color: #fff !important;
-        border-color: #27d5a2 !important;
-        cursor: default;
-        pointer-events: none;
-      }
-      .btn.detail {
-        display: none;
-      }
-      .section.confirmed .btn.detail {
-        display: inline-block;
-      }
-      #btn-salary-lock {
-        display: none;
-      }
-      .salary-step-ready #btn-salary-lock {
-        display: inline-block;
-      }
-      #step-error {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff8ec;
-        color: #e67e22;
-        border: 1.5px solid #f6c47b;
-        border-radius: 8px;
-        box-shadow: 0 2px 12px 0 rgba(230, 126, 34, 0.08);
-        padding: 16px 40px;
-        font-size: 18px;
-        z-index: 9999;
-        animation: fadeIn 0.25s;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h2 class="header">Bảng tổng hợp tính lương nhân viên tháng 6</h2>
-      <form class="form-row" autocomplete="off">
-        <div class="form-group">
-          <label for="ky-cham-cong" class="form-label">Chọn kỳ chấm công</label>
-          <select id="ky-cham-cong" class="form-select">
-            <option value="6-2025">Tháng 6/2025</option>
-            <option value="5-2025">Tháng 5/2025</option>
-            <option value="4-2025">Tháng 4/2025</option>
-            <option value="3-2025">Tháng 3/2025</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="don-vi" class="form-label">Chọn đơn vị</label>
-          <select id="don-vi" class="form-select">
-            <option value="congty">Công ty TNHH ABC</option>
-            <option value="congty2">Công ty CP XYZ</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="chi-nhanh" class="form-label">Chọn chi nhánh</label>
-          <select id="chi-nhanh" class="form-select">
-            <option value="all">Tất cả</option>
-            <option value="hanoi">Chi nhánh Hà Nội</option>
-            <option value="hcm">Chi nhánh Hồ Chí Minh</option>
-            <option value="danang">Chi nhánh Đà Nẵng</option>
-          </select>
-        </div>
-      </form>
-      <div class="section-list">
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bảng tổng hợp tính lương nhân viên tháng 6</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="salary-summary.css">
 
-        <div class="section" id="section-1">
-          <div class="section-number" id="number-1">1</div>
-          <div class="section-content">
-            <div class="section-title">Bảng chấm công theo kỳ</div>
-            <div class="section-desc">
-              Tổng hợp dữ liệu chấm công hàng ngày để xác định tổng công, số ngày nghỉ, số ca làm việc trong kỳ.
-            </div>
-            <div class="section-actions">
-              <button class="btn confirm" onclick="confirmStep(1, this)">Xác nhận</button>
-              <button class="btn detail">Xem chi tiết</button>
-            </div>
-            <div class="confirm-message" id="confirm-message-1" style="display:none;">
-              <span class="checkmark">✔</span> Đã hoàn thành bước này
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="section-2">
-          <div class="section-number" id="number-2">2</div>
-          <div class="section-content">
-            <div class="section-title">Các khoản phải phụ cấp theo kỳ</div>
-            <div class="section-desc">Mô tả ...</div>
-            <div class="section-actions">
-              <button class="btn confirm" onclick="confirmStep(2, this)">Xác nhận</button>
-              <button class="btn detail">Xem chi tiết</button>
-            </div>
-            <div class="confirm-message" id="confirm-message-2" style="display:none;">
-              <span class="checkmark">✔</span> Đã hoàn thành bước này
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="section-3">
-          <div class="section-number" id="number-3">3</div>
-          <div class="section-content">
-            <div class="section-title">Các khoản phải nộp theo kỳ</div>
-            <div class="section-desc">Mô tả ...</div>
-            <div class="section-actions">
-              <button class="btn confirm" onclick="confirmStep(3, this)">Xác nhận</button>
-              <button class="btn detail">Xem chi tiết</button>
-            </div>
-            <div class="confirm-message" id="confirm-message-3" style="display:none;">
-              <span class="checkmark">✔</span> Đã hoàn thành bước này
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="section-4">
-          <div class="section-number" id="number-4">4</div>
-          <div class="section-content">
-            <div class="section-title">Các khoản giảm trừ theo kỳ</div>
-            <div class="section-desc">Mô tả ...</div>
-            <div class="section-actions">
-              <button class="btn confirm" onclick="confirmStep(4, this)">Xác nhận</button>
-              <button class="btn detail">Xem chi tiết</button>
-            </div>
-            <div class="confirm-message" id="confirm-message-4" style="display:none;">
-              <span class="checkmark">✔</span> Đã hoàn thành bước này
-            </div>
-          </div>
-        </div>
-
-        <div class="section" id="section-5">
-          <div class="section-number" id="number-5">5</div>
-          <div class="section-content">
-            <div class="section-title">Bảng lương & thanh toán</div>
-            <div class="section-desc">
-              <ul>
-                <li>Lập bảng lương chi tiết từng nhân viên.</li>
-                <li>Chuyển lương vào tài khoản ngân hàng hoặc thanh toán theo hình thức đã đăng ký.</li>
-              </ul>
-            </div>
-            <div class="section-actions">
-              <button class="btn excel special" id="btn-salary-lock">Tiền lương & xác vào bảng chấm công</button>
-              <button class="btn confirm" onclick="confirmStep(5, this)">Xác nhận</button>
-              <button class="btn detail">Xem bảng lương</button>
-            </div>
-            <div class="confirm-message" id="confirm-message-5" style="display:none;">
-              <span class="checkmark">✔</span> Đã hoàn thành bước này
-            </div>
-          </div>
-        </div>
-
+</head>
+<body>
+  <div class="container">
+    <h2 class="header">Bảng tổng hợp tính lương nhân viên tháng 6</h2>
+    <form class="form-row" autocomplete="off">
+      <div class="form-group">
+        <label for="ky-cham-cong" class="form-label">Chọn kỳ chấm công</label>
+        <select id="ky-cham-cong" class="form-select">
+          <option value="6-2025">Tháng 6/2025</option>
+          <option value="5-2025">Tháng 5/2025</option>
+          <option value="4-2025">Tháng 4/2025</option>
+          <option value="3-2025">Tháng 3/2025</option>
+        </select>
       </div>
+      <div class="form-group">
+        <label for="don-vi" class="form-label">Chọn đơn vị</label>
+        <select id="don-vi" class="form-select">
+          <option value="congty">Công ty TNHH ABC</option>
+          <option value="congty2">Công ty CP XYZ</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="chi-nhanh" class="form-label">Chọn chi nhánh</label>
+        <select id="chi-nhanh" class="form-select">
+          <option value="all">Tất cả</option>
+          <option value="hanoi">Chi nhánh Hà Nội</option>
+          <option value="hcm">Chi nhánh Hồ Chí Minh</option>
+          <option value="danang">Chi nhánh Đà Nẵng</option>
+        </select>
+      </div>
+    </form>
+    <!-- Progress bar -->
+    <div class="progress-container">
+      <span class="progress-label">Tiến độ hoàn thành</span>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar-fill" style="width:0%">0%</div>
+      </div>
+      <span class="progress-percent-text" id="progress-percent-text">0%</span>
     </div>
-    <!-- Thông báo lỗi -->
-    <div id="step-error">Vui lòng hoàn thành bước trước đó trước khi xác nhận bước này!</div>
-    <script>
-      function confirmStep(step, btn) {
-        // Nếu không phải bước đầu, kiểm tra bước trước đã hoàn thành chưa
-        if (step > 1) {
-          var prevSection = document.getElementById('section-' + (step - 1));
-          if (!prevSection.classList.contains('confirmed')) {
-            showStepError();
-            return;
-          }
-        }
-        // Đánh dấu hoàn thành
-        document.getElementById('section-' + step).classList.add('confirmed');
-        document.getElementById('number-' + step).classList.add('confirmed');
-        document.getElementById('confirm-message-' + step).style.display = 'flex';
-        btn.classList.add('confirmed');
-        btn.innerText = 'Đã xác nhận';
-        // Đặc biệt cho bước 4: sau khi xác nhận thì enable nút Tiền lương & xác vào bảng chấm công ở bước 5
-        if (step === 4) {
-          document.getElementById('section-5').classList.add('salary-step-ready');
+    <!-- End Progress bar -->
+
+    <div class="section-list">
+
+      <div class="section" id="section-1">
+        <div class="section-number" id="number-1">1</div>
+        <div class="section-content">
+          <div class="section-title">Bảng chấm công theo kỳ</div>
+          <div class="section-desc">
+            Tổng hợp dữ liệu chấm công hàng ngày để xác định tổng công, số ngày nghỉ, số ca làm việc trong kỳ.
+          </div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(1, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-1" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-2">
+        <div class="section-number" id="number-2">2</div>
+        <div class="section-content">
+          <div class="section-title">Các khoản phải phụ cấp theo kỳ</div>
+          <div class="section-desc">Mô tả ...</div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(2, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-2" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-3">
+        <div class="section-number" id="number-3">3</div>
+        <div class="section-content">
+          <div class="section-title">Các khoản phải nộp theo kỳ</div>
+          <div class="section-desc">Mô tả ...</div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(3, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-3" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-4">
+        <div class="section-number" id="number-4">4</div>
+        <div class="section-content">
+          <div class="section-title">Các khoản giảm trừ theo kỳ</div>
+          <div class="section-desc">Mô tả ...</div>
+          <div class="section-actions">
+            <button class="btn confirm" onclick="confirmStep(4, this)">Xác nhận</button>
+            <button class="btn detail">Xem chi tiết</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-4" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section-5">
+        <div class="section-number" id="number-5">5</div>
+        <div class="section-content">
+          <div class="section-title">Bảng lương & thanh toán</div>
+          <div class="section-desc">
+            <ul>
+              <li>Lập bảng lương chi tiết từng nhân viên.</li>
+              <li>Chuyển lương vào tài khoản ngân hàng hoặc thanh toán theo hình thức đã đăng ký.</li>
+            </ul>
+          </div>
+          <div class="section-actions">
+            <button class="btn excel special" id="btn-salary-lock">Tiền lương & xác vào bảng chấm công</button>
+            <button class="btn confirm" onclick="confirmStep(5, this)">Xác nhận</button>
+            <button class="btn detail">Xem bảng lương</button>
+          </div>
+          <div class="confirm-message" id="confirm-message-5" style="display:none;">
+            <span class="checkmark">✔</span> Đã hoàn thành bước này
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Thông báo lỗi -->
+  <div id="step-error">Vui lòng hoàn thành bước trước đó trước khi xác nhận bước này!</div>
+  <script>
+    function confirmStep(step, btn) {
+      // Nếu không phải bước đầu, kiểm tra bước trước đã hoàn thành chưa
+      if (step > 1) {
+        var prevSection = document.getElementById('section-' + (step - 1));
+        if (!prevSection.classList.contains('confirmed')) {
+          showStepError();
+          return;
         }
       }
-      function showStepError() {
-        var errorDiv = document.getElementById('step-error');
-        errorDiv.style.display = 'block';
-        clearTimeout(window.__stepErrorTimeout);
-        window.__stepErrorTimeout = setTimeout(function(){
-          errorDiv.style.display = 'none';
-        }, 2000);
+      // Đánh dấu hoàn thành
+      document.getElementById('section-' + step).classList.add('confirmed');
+      document.getElementById('number-' + step).classList.add('confirmed');
+      document.getElementById('confirm-message-' + step).style.display = 'flex';
+      btn.classList.add('confirmed');
+      btn.innerText = 'Đã xác nhận';
+      // Đặc biệt cho bước 4: sau khi xác nhận thì enable nút Tiền lương & xác vào bảng chấm công ở bước 5
+      if (step === 4) {
+        document.getElementById('section-5').classList.add('salary-step-ready');
       }
-    </script>
-  </body>
-  </html>
+      updateProgressBar();
+    }
+
+    function showStepError() {
+      var errorDiv = document.getElementById('step-error');
+      errorDiv.style.display = 'block';
+      clearTimeout(window.__stepErrorTimeout);
+      window.__stepErrorTimeout = setTimeout(function(){
+        errorDiv.style.display = 'none';
+      }, 2000);
+    }
+
+    function updateProgressBar() {
+      // Tổng số bước là 5 (id từ 1-5)
+      var total = 5;
+      var done = 0;
+      for (var i = 1; i <= total; ++i) {
+        if (document.getElementById('section-' + i).classList.contains('confirmed')) done++;
+      }
+      var percent = Math.round((done/total)*100);
+      var bar = document.getElementById('progress-bar-fill');
+      var text = document.getElementById('progress-percent-text');
+      bar.style.width = percent + '%';
+      bar.textContent = percent + '%';
+      text.textContent = percent + '%';
+    }
+    // Cập nhật lại khi load trang (phòng trường hợp có bước đã được xác nhận trước đó)
+    updateProgressBar();
+  </script>
+</body>
+</html>
